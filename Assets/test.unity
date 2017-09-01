@@ -435,7 +435,7 @@ MonoBehaviour:
   prefabTile: {fileID: 114314598403562784, guid: 63ee4dadac76886469d8e5aba060e011,
     type: 2}
   points: 0
-  Name: David
+  Name: Ryan
   HandSize: 3
   PointsText: {fileID: 264060550}
   inHandY: 22.5
@@ -1037,7 +1037,7 @@ Prefab:
     - target: {fileID: 114757219025626200, guid: f6684308f18dcd1499d60f569695389e,
         type: 2}
       propertyPath: Name
-      value: Kamal
+      value: David
       objectReference: {fileID: 0}
     - target: {fileID: 114186554279843306, guid: f6684308f18dcd1499d60f569695389e,
         type: 2}
@@ -1059,6 +1059,7 @@ GameObject:
   - component: {fileID: 1436418311}
   - component: {fileID: 1436418310}
   - component: {fileID: 1436418313}
+  - component: {fileID: 1436418314}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -1077,24 +1078,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75a461f25c838a4e887958e6f282777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 1436418311}
-  TilePrefab: {fileID: 114314598403562784, guid: 63ee4dadac76886469d8e5aba060e011,
-    type: 2}
-  TilesParent: {fileID: 388267217}
-  width: 10
-  height: 10
-  FilledPositions: []
+  Data:
+    width: 10
+    height: 10
+    FilledPositions: []
+  Display: {fileID: 1436418314}
   players:
   - {fileID: 922068323}
   - {fileID: 264060553}
   PlayerIndex: 0
-  scale: 3
   MonstersAmnt: 20
   MonsterPrefab: {fileID: 114808904109025090, guid: c72dcea9e23c7a741abbb300a4d9f898,
     type: 2}
   Picture: {fileID: 281495694}
   Description: {fileID: 238085582}
-  WinAmnt: 10
+  WinAmnt: 15
+  width: 10
+  height: 10
   Winner: {fileID: 0}
   WinScreen: {fileID: 1838965976}
 --- !u!114 &1436418311
@@ -1144,6 +1144,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bForkSDKInit: 1
   TexturePath: ForkFX/
+--- !u!114 &1436418314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1436418309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49656f4db9582b642a1b65ffe381fbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 1436418311}
+  TilesParent: {fileID: 388267217}
+  MonsterParent: {fileID: 978165384}
+  TilePrefab: {fileID: 114314598403562784, guid: 63ee4dadac76886469d8e5aba060e011,
+    type: 2}
+  MonsterPrefab: {fileID: 114808904109025090, guid: c72dcea9e23c7a741abbb300a4d9f898,
+    type: 2}
+  scale: 3
+  width: 10
+  height: 10
 --- !u!1 &1468722696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,7 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c716e8efa75f54789f45bb6ec6d78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
+  tileInHand: {fileID: 0}
   transparency: 1
 --- !u!224 &1497785756 stripped
 RectTransform:
@@ -1320,6 +1341,11 @@ Prefab:
     - target: {fileID: 1192912401669670, guid: 63ee4dadac76886469d8e5aba060e011, type: 2}
       propertyPath: m_Name
       value: GhostTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 114138200377486892, guid: 63ee4dadac76886469d8e5aba060e011,
+        type: 2}
+      propertyPath: rotateSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63ee4dadac76886469d8e5aba060e011, type: 2}

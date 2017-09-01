@@ -585,7 +585,7 @@ PlayerSettings:
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled: {}
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: b2ac1800-a0f1-417b-8251-4a29a5991f8c
   projectName: Caged
   organizationId: david-saks

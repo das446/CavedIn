@@ -55,16 +55,13 @@ namespace Caged
             {
                 GhostTile.main = GameObject.FindObjectOfType<GhostTile>();
                 Debug.Log(GhostTile.main);
-                GhostTile.main.tile=GhostTile.main.GetComponent<Tile>();
+                GhostTile.main.tileInHand=GhostTile.main.GetComponent<Tile>();
             }
             if(selectedTile==null){
                 selectedTile=GetComponent<Tile>();
             }
-            GhostTile.main.tile.Copy(selectedTile);
-            GhostTile.main.tile.AdjustColors();
-            GhostTile.main.tile.AdjustTransparency();
-
-
+            GhostTile.main.tileInHand.Set(selectedTile);
+            GhostTile.main.tileInHand.Display.AdjustDisplay();
         }
     }
 }

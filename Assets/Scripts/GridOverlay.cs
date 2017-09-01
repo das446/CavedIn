@@ -12,10 +12,11 @@ public class GridOverlay : MonoBehaviour {
 	public float lineWidth;
     public void DrawGrid()
     {
+        GameObject p=new GameObject();
         for (float x = startX; x <= stopX; x += Step)
         {
             GameObject go = new GameObject();
-            go.transform.parent = transform;
+            go.transform.parent=p.transform;
             LineRenderer lr = go.AddComponent<LineRenderer>();
             lr.material = m;
             lr.startColor = Color.green;
@@ -29,7 +30,7 @@ public class GridOverlay : MonoBehaviour {
         for (float y = startY; y <= stopY; y += Step)
         {
             GameObject go = new GameObject();
-            go.transform.parent = transform;
+            go.transform.parent = p.transform;
             LineRenderer lr = go.AddComponent<LineRenderer>();
 			lr.startWidth=lineWidth;
 			lr.endWidth=lineWidth;

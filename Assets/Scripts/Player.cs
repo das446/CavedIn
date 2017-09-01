@@ -23,12 +23,11 @@ public class Player : MonoBehaviour {
 		for(int i=0;i<HandSize;i++){
 			Tiles[i]=Instantiate(prefabTile,new Vector2(mid+5*i,inHandY),Quaternion.identity);
 			Tiles[i].RandomizeColors();
-			Tiles[i].AdjustColors();
+			Tiles[i].Display.AdjustDisplay();
 			Tiles[i].GetComponent<InHandTile>().enabled=true;
 			Tiles[i].GetComponent<InHandTile>().Controller=this;
 		}
 		Tiles[0].GetComponent<InHandTile>().Select();
-		Debug.Log(Current);
 	}
 	
 	// Update is called once per frame

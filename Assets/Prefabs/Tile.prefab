@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 114314598403562784}
   - component: {fileID: 60497750352675004}
   - component: {fileID: 114251736496339712}
+  - component: {fileID: 114138200377486892}
   m_Layer: 8
   m_Name: Tile
   m_TagString: Untagged
@@ -1128,6 +1129,48 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114138200377486892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192912401669670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adaf2c7274c2364d823a58fbfdb8674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    Right:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Down:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Left:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Up:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    x: 0
+    y: 0
+  tile: {fileID: 114314598403562784}
+  rotateSpeed: 0
+  rotating: 0
+  transparency: 255
+  right: {fileID: 1680609673889630}
+  rightI: {fileID: 1345097092106476}
+  down: {fileID: 1856856010775518}
+  downI: {fileID: 1946921014347884}
+  left: {fileID: 1514227133420318}
+  leftI: {fileID: 1613580171499250}
+  up: {fileID: 1138229444026436}
+  upI: {fileID: 1983676974504064}
 --- !u!114 &114251736496339712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1155,16 +1198,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53c9a7bf2553ad46afe73e350e8143a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 200
-  transparency: 0
-  right: {fileID: 1680609673889630}
-  rightI: {fileID: 1345097092106476}
-  down: {fileID: 1856856010775518}
-  downI: {fileID: 1946921014347884}
-  left: {fileID: 1514227133420318}
-  leftI: {fileID: 1613580171499250}
-  up: {fileID: 1138229444026436}
-  upI: {fileID: 1983676974504064}
+  Data:
+    Right:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Down:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Left:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    Up:
+      name: 
+      GemName: 
+      rgb: {r: 0, g: 0, b: 0, a: 0}
+    x: 0
+    y: 0
+  Display: {fileID: 114138200377486892}
 --- !u!114 &114771593330985638
 MonoBehaviour:
   m_ObjectHideFlags: 1

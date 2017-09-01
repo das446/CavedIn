@@ -30,12 +30,20 @@ namespace Caged
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                Debug.Log(ValidPositions().Count);
+                Debug.Log(ValidPositions(Board.Main.Data).Count);
             }
         }
 
+        public void TakeTurn(){
+            //Move move=ChooseMove();
+            //PlayTile(move);
+        }
+        public void PlayTile(Move move){
+
+        }
+
 		public HashSet<Move> ValidMoves(){
-			HashSet<Vector2> Positions = ValidPositions();
+			HashSet<Vector2> Positions = ValidPositions(Board.Main.Data);
 			HashSet<Move> Moves=new HashSet<Move>();
 			Board board = Board.Main;
 			foreach(Vector2 v in Positions){
@@ -47,7 +55,7 @@ namespace Caged
 
 							//Moves.Add(new Move(v,t,i));
 						}
-						t.RotateClockwise();
+						//t.Ro();
 					}
 				}
 			}
@@ -55,15 +63,14 @@ namespace Caged
 
 		}
 
-        public HashSet<Vector2> ValidPositions()
+        public HashSet<Vector2> ValidPositions(BoardData board)
         {
-            Board board = Board.Main;
             HashSet<Vector2> Positions = new HashSet<Vector2>();
             foreach (Vector2 v in board.FilledPositions)
             {
                 int x = (int)v.x;
                 int y = (int)v.y;
-                Tile t = board.Tiles[x, y];
+                TileData t = board.Tiles[x, y];
                 if (t.Above() == null)
                 {
                     Positions.Add(new Vector2(v.x, v.y + 1));

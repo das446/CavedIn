@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Caged{
+	[System.Serializable]
 public class Color {
 
 	public static readonly Color Red=new Color("Red","Ruby",UnityEngine.Color.red);
@@ -12,10 +13,10 @@ public class Color {
 	public static readonly Color Black = new Color("Black", "Onyx", UnityEngine.Color.black);
 	public static readonly Color White = new Color("White", "Diamond", UnityEngine.Color.white);
 
-	public readonly string name;
-	public readonly string GemName;
+	public string name;
+	public string GemName;
 
-	public readonly UnityEngine.Color rgb;
+	public UnityEngine.Color rgb;
 
 	public Color(string Name,string gem,UnityEngine.Color RGB){
 		name=Name;
