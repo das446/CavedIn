@@ -145,6 +145,7 @@ namespace Caged
                 PlayerIndex = 0;
             }
             Player.Current = players[PlayerIndex];
+            Debug.Log("Player Index="+PlayerIndex+Player.Current);
             Player.Current.Tiles[0].GetComponent<InHandTile>().Select();
         }
 
@@ -174,6 +175,10 @@ namespace Caged
         public float TotalHeight()
         {
             return height * Display.scale;
+        }
+
+        public float scale{
+            get {return Display.scale;}
         }
 
     }

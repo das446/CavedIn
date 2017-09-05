@@ -15,6 +15,7 @@ namespace Caged
         float yOff=0;
         void Update()
         {
+            //if(!Player.Current.Human){return;}
             viewWidth = Camera.main.orthographicSize - 10;
             viewHeight = Camera.main.orthographicSize + 2;
             if (Input.GetKey(KeyCode.RightArrow) && transform.position.x < Board.Main.TotalWidth() - viewWidth / 2)

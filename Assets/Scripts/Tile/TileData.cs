@@ -29,6 +29,10 @@ namespace Caged
         {
         }
 
+        public string toString(){
+            return "Up=" + Up.name + ", Right=" + Right.name + "\nDown=" + Down.name + ", Left=" + Left.name;
+        }
+
         public void TestSet(){
             Debug.Log("Test set");
             Right = Color.Random();

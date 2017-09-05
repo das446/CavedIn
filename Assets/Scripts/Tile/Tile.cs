@@ -15,6 +15,11 @@ namespace Caged
             Display.tile=this;
             Display.Data=Data;
         }
+
+        public string toString(){
+            return Data.toString();
+        }
+
         public IEnumerator Rotate()
         {
             Debug.Log("Rotate");

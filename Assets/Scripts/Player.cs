@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
 	public Text PointsText;
 	public float inHandY;
+	public bool Human;
 
 	public static Player Current;
 	// Use this for initialization

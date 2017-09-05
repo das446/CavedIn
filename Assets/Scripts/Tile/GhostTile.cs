@@ -6,54 +6,70 @@ namespace Caged
 {
     public class GhostTile : MonoBehaviour
     {
-        public Tile tileInHand;
+        public Tile ghostTile;
         public static GhostTile main;
         public float transparency;
         int uiWidth = 1000;
         int scale;
-		
+        public bool TestingFollow=false;
+
         // Use this for initialization
         void Start()
         {
             main = this;
-            tileInHand = GetComponent<Tile>();
-            tileInHand.Display.transparency = transparency;
-            tileInHand.Display.AdjustTransparency();
+            ghostTile = GetComponent<Tile>();
+            ghostTile.Display.transparency = transparency;
+            ghostTile.Display.AdjustDisplay();
             scale = 3;
         }
 
         // Update is called once per frame
         void Update()
         {
-            Debug.Log("Should Rotate"+ShouldRotate());
             if (ShouldRotate())
             {
-                StartCoroutine(tileInHand.Rotate());
+                StartCoroutine(ghostTile.Rotate());
             }
 
-            Vector3 v3 = Input.mousePosition;
-            if (v3.x > uiWidth) { v3.x = uiWidth; }
-            v3.z = 10.0f;
-            v3 = Camera.main.ScreenToWorldPoint(v3);
-            transform.position = NearestIntersection(v3);
-            
-            if (Input.GetMouseButtonDown(0) && Input.mousePosition.x < uiWidth)
+            if (Player.Current.Human)
             {
-                Tile PlacedTile = Board.Main.AddTileToBoard(tileInHand, transform.position / scale);
-				if(PlacedTile!=null){
-                    PlacedTile.Set(tileInHand.Data);
-                    PlacedTile.AdjustDisplay();
-					InHandTile.selectedTile.Data.RandomizeColors();
-					InHandTile.selectedTile.Display.AdjustColors();
-                    tileInHand.Set(InHandTile.selectedTile);
-                    tileInHand.AdjustDisplay();
-                    Board.Main.SetNextPlayer();
-				}
+                Vector3 v3 = Input.mousePosition;
+                if (v3.x > uiWidth) { v3.x = uiWidth; }
+                v3.z = 10.0f;
+                v3 = Camera.main.ScreenToWorldPoint(v3);
+                transform.position = NearestIntersection(v3);
+
+                if (Input.GetMouseButtonDown(0) && Input.mousePosition.x < uiWidth)
+                {
+                    Place();
+                }
+            }
+            else if(TestingFollow){
+                Vector3 p= Camera.main.transform.position;
+                p.x=transform.position.x+7.5f;
+                p.y=transform.position.y;
+                Camera.main.transform.position=Vector3.MoveTowards(Camera.main.transform.position,p,Time.deltaTime*15);
             }
         }
 
-        public bool ShouldRotate(){
-            return (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.X)) && !tileInHand.Display.rotating;
+        public void Place()
+        {
+            Tile PlacedTile = Board.Main.AddTileToBoard(ghostTile, transform.position / scale);
+            if (PlacedTile != null)
+            {
+                PlacedTile.Set(ghostTile.Data);
+                PlacedTile.AdjustDisplay();
+                InHandTile.selectedTile.Data.RandomizeColors();
+                InHandTile.selectedTile.Display.AdjustDisplay();
+                ghostTile.Set(InHandTile.selectedTile);
+                ghostTile.AdjustDisplay();
+                Board.Main.SetNextPlayer();
+            }
+        }
+
+        public bool ShouldRotate()
+        {
+            return (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.X)) && !ghostTile.Display.rotating;
         }
         Vector3 NearestIntersection(Vector3 v)
         {

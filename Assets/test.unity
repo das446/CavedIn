@@ -420,6 +420,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  WaitTime: 0.1
+  PlayingPiece: 0
 --- !u!114 &264060553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,16 +437,36 @@ MonoBehaviour:
   prefabTile: {fileID: 114314598403562784, guid: 63ee4dadac76886469d8e5aba060e011,
     type: 2}
   points: 0
-  Name: Ryan
+  Name: AI
   HandSize: 3
   PointsText: {fileID: 264060550}
   inHandY: 22.5
+  Human: 0
 --- !u!114 &281495694 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114893392314815194, guid: f6684308f18dcd1499d60f569695389e,
     type: 2}
   m_PrefabInternal: {fileID: 1286162677}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &285402266 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1968312990233566, guid: f6684308f18dcd1499d60f569695389e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1286162677}
+--- !u!114 &285402270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 285402266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267ec485d1dfd414480de97f150ae7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  WaitTime: 0.1
+  PlayingPiece: 0
 --- !u!1001 &301899579
 Prefab:
   m_ObjectHideFlags: 0
@@ -1042,7 +1064,12 @@ Prefab:
     - target: {fileID: 114186554279843306, guid: f6684308f18dcd1499d60f569695389e,
         type: 2}
       propertyPath: m_Text
-      value: David
+      value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114757219025626200, guid: f6684308f18dcd1499d60f569695389e,
+        type: 2}
+      propertyPath: Human
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114041373331300914, guid: f6684308f18dcd1499d60f569695389e, type: 2}
@@ -1292,8 +1319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c716e8efa75f54789f45bb6ec6d78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileInHand: {fileID: 0}
+  ghostTile: {fileID: 0}
   transparency: 1
+  TestingFollow: 0
 --- !u!224 &1497785756 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224372157510381170, guid: f6684308f18dcd1499d60f569695389e,
@@ -1345,7 +1373,7 @@ Prefab:
     - target: {fileID: 114138200377486892, guid: 63ee4dadac76886469d8e5aba060e011,
         type: 2}
       propertyPath: rotateSpeed
-      value: 10
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63ee4dadac76886469d8e5aba060e011, type: 2}

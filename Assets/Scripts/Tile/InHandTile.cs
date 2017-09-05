@@ -27,7 +27,7 @@ namespace Caged
         // Update is called once per frame
         void Update()
         {
-
+            
             Vector3 v = Camera.main.ScreenToWorldPoint(Default);
             v.z = z;
             transform.position = v;
@@ -55,13 +55,13 @@ namespace Caged
             {
                 GhostTile.main = GameObject.FindObjectOfType<GhostTile>();
                 Debug.Log(GhostTile.main);
-                GhostTile.main.tileInHand=GhostTile.main.GetComponent<Tile>();
+                GhostTile.main.ghostTile=GhostTile.main.GetComponent<Tile>();
             }
             if(selectedTile==null){
                 selectedTile=GetComponent<Tile>();
             }
-            GhostTile.main.tileInHand.Set(selectedTile);
-            GhostTile.main.tileInHand.Display.AdjustDisplay();
+            GhostTile.main.ghostTile.Set(selectedTile);
+            GhostTile.main.ghostTile.Display.AdjustDisplay();
         }
     }
 }

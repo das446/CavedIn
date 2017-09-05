@@ -19,7 +19,7 @@ namespace Caged
             AdjustColors();
             AdjustTransparency();
         }
-        public void AdjustColors()
+        void AdjustColors()
         {
             right.GetComponent<Renderer>().material.color = Data.Right;
             rightI.GetComponent<Renderer>().material.color = Data.Right;
@@ -30,7 +30,7 @@ namespace Caged
             down.GetComponent<Renderer>().material.color = Data.Down;
             downI.GetComponent<Renderer>().material.color = Data.Down;
         }
-        public void AdjustTransparency()
+        void AdjustTransparency()
         {
             Renderer[] rens = GetComponentsInChildren<Renderer>();
             foreach (Renderer r in rens)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Caged
 {
@@ -42,7 +43,10 @@ namespace Caged
             TileData tile = new TileData(t,x,y);
             tile.x=x;
             tile.y=y;
-            Tiles[x, y] = tile;
+            try{Tiles[x, y] = tile;}
+            catch (IndexOutOfRangeException e){
+                Debug.Log("x="+x+", y="+y);
+            }
             FilledPositions.Add(pos);
             //CheckSurroundSpace(x, y);
             return tile;
@@ -50,8 +54,8 @@ namespace Caged
 
         public bool CanPlayTile(Tile t, int x, int y)
         {
-            if (Neighbors(x, y) == 0) { return false; }
-
+            if (Neighbors(x, y) == 0||x<0||y<0||x>=width||y>=height) { return false; }
+            if(Tiles[x,y]!=null){return false;}
             bool Avalid = true;
             if (Above(x, y) != null)
             {
@@ -183,24 +187,45 @@ namespace Caged
         }
         public TileData Above(int x, int y)
         {
+            if (y >= height-1||x<0||x>=width) { return null; }
             return Tiles[x, y + 1];
         }
         public TileData Below(int x, int y)
         {
+            if (y <= 0|| x < 0 || x >= width) { return null; }
             return Tiles[x, y - 1];
         }
         public TileData ToRight(int x, int y)
         {
+            if (x >= width-1||y<0||y>=height) { return null; }
             return Tiles[x + 1, y];
         }
         public TileData ToLeft(int x, int y)
         {
+            if(x<=0|| y < 0 || y >= height){return null;}
             return Tiles[x - 1, y];
         }
 
         public void CreateMonster(Monster m,int x,int y)
         {
             Monsters[x, y] = m;
+        }
+
+        public TileData this[int x,int y]{
+            get{return Tiles[x,y];}
+        }
+
+        public TileData this[float x, float y]
+        {
+            get { return Tiles[(int)x, (int)y]; }
+        }
+
+        public TileData this[Vector2 pos]
+        {
+            get {int x=(int)pos.x / 3;
+                 int y= (int)pos.y / 3;
+                 if(x>=width||x<0||y<0||y>=height){return null;}
+                return Tiles[x,y]; }
         }
 
     }
