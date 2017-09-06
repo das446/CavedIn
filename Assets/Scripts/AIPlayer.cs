@@ -12,14 +12,14 @@ namespace Caged
             public Vector2 pos;
             public int tile;
             public int rotations;
-            public bool willCapture;
+            public bool capture;//TODO None-Empty-Monster
 
             public Move(Vector2 p, int i, int r, bool c)
             {
                 pos = p;
                 tile = i;
                 rotations = r;
-                willCapture = c;
+                capture = c;
             }
 
             public String toString()
@@ -29,7 +29,7 @@ namespace Caged
         }
         public Player player;
 
-        public float WaitTime=1;
+        public float WaitTime = 1;
         public bool PlayingPiece = false;
         // Use this for initialization
         void Start()
@@ -53,17 +53,20 @@ namespace Caged
 
         IEnumerator TakeTurn()
         {
-            PlayingPiece=true;
+            PlayingPiece = true;
             //GhostTile.main.Ca
             Move move = DecideMove();
-            Debug.Log(move.toString());
             yield return StartCoroutine(MoveTile(move));
-            PlayingPiece=false;
+            PlayingPiece = false;
         }
         Move DecideMove()
         {
             System.Random randomizer = new System.Random();
             Move[] moves = ValidMoves().ToArray();
+            Move[] capturingMoves = moves.Where(x => x.capture).ToArray();
+            if(capturingMoves.Length>0){
+                return capturingMoves[randomizer.Next(capturingMoves.Length)];    
+            }
             return moves[randomizer.Next(moves.Length)];
         }
         IEnumerator MoveTile(Move move)
@@ -85,31 +88,19 @@ namespace Caged
 
         IEnumerator MoveGhostTileToPos(Move move)
         {
-            GhostTile.main.transform.position=Vector2.zero;
+            GhostTile.main.transform.position = Vector2.zero;
             float scale = Board.Main.scale;
-            Vector2 targetPos = move.pos*scale;
+            Vector2 targetPos = move.pos * scale;
             Vector2 currentPos = GhostTile.main.transform.position;
-            while (targetPos!=currentPos)
+            while (targetPos != currentPos)
             {
-                if(currentPos.x<targetPos.x){
-                    currentPos.x+=scale;
-                }
-                else if(currentPos.x>targetPos.x){
-                    currentPos.x-=scale;
-                }
-
-                if(Board.Main.Data[currentPos]==null){
-                    GhostTile.main.transform.position=currentPos;
-                    yield return new WaitForSeconds(WaitTime);
-                }
-
-                if (currentPos.y < targetPos.y)
+                if (currentPos.x < targetPos.x)
                 {
-                    currentPos.y+=scale;
+                    currentPos.x += scale;
                 }
-                else if (currentPos.y > targetPos.y)
+                else if (currentPos.x > targetPos.x)
                 {
-                    currentPos.y-=scale;
+                    currentPos.x -= scale;
                 }
 
                 if (Board.Main.Data[currentPos] == null)
@@ -117,7 +108,22 @@ namespace Caged
                     GhostTile.main.transform.position = currentPos;
                     yield return new WaitForSeconds(WaitTime);
                 }
-                
+
+                if (currentPos.y < targetPos.y)
+                {
+                    currentPos.y += scale;
+                }
+                else if (currentPos.y > targetPos.y)
+                {
+                    currentPos.y -= scale;
+                }
+
+                if (Board.Main.Data[currentPos] == null)
+                {
+                    GhostTile.main.transform.position = currentPos;
+                    yield return new WaitForSeconds(WaitTime);
+                }
+
             }
         }
 
@@ -131,15 +137,17 @@ namespace Caged
                 int x = (int)v.x;
                 int y = (int)v.y;
                 int c = 0;
-                int height=board.Data.height;
-                int width=board.Data.width;
+                int height = board.Data.height;
+                int width = board.Data.width;
                 foreach (TileData t in player.Tiles)
                 {
                     for (int r = 0; r < 4; r++)
                     {
-                        if (board.CanPlayTile(t, x, y)&&x>=0&&y>=0&&x<width&&y<height)
+                        if (board.CanPlayTile(t, x, y) && x >= 0 && y >= 0 && x < width && y < height)
                         {
-                            Moves.Add(new Move(v, c, r, true));
+                            Move m = new Move(v, c, r, false);
+                            m.capture = WillCapture(m, board);
+                            Moves.Add(m);
                         }
                         t.Rotate();
                     }
@@ -150,6 +158,18 @@ namespace Caged
 
         }
 
+        bool WillCapture(Move move, Board board)
+        {
+            int x = (int)move.pos.x;
+            int y = (int)move.pos.y;
+            bool UR=board.Data[x, y + 1] != null && board.Data[x + 1, y] != null && board.Data[x + 1, y + 1] != null;
+            bool DR = board.Data[x, y - 1] != null && board.Data[x + 1, y] != null && board.Data[x + 1, y - 1] != null;
+            bool DL = board.Data[x-1, y] != null && board.Data[x, y-1] != null && board.Data[x - 1, y - 1] != null;
+            bool UL = board.Data[x-1, y] != null && board.Data[x, y+1] != null && board.Data[x - 1, y + 1] != null;
+
+            return UR || DR || DL || UL;
+        }
+
         public HashSet<Vector2> ValidPositions(BoardData board)
         {
             HashSet<Vector2> Positions = new HashSet<Vector2>();
@@ -158,8 +178,8 @@ namespace Caged
                 int x = (int)v.x;
                 int y = (int)v.y;
                 TileData t;
-                if(x<0||y<0||x>=board.width||y>=board.height){Debug.Log("Skip outOfBounds");continue;}
-                else {t = board.Tiles[x, y];}
+                if (x < 0 || y < 0 || x >= board.width || y >= board.height) { Debug.Log("Skip outOfBounds"); continue; }
+                else { t = board.Tiles[x, y]; }
                 if (t.Above() == null)
                 {
                     Positions.Add(new Vector2(v.x, v.y + 1));

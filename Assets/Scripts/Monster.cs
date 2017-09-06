@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour {
 
 	void OnMouseEnter()
 	{
-		Description.text="Red Dragon\n3 pts\n When you defeat this take another turn";
+		//Description.text="Red Dragon\n3 pts\n When you defeat this take another turn";
 	}
 
 	void OnMouseExit()

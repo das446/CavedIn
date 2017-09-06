@@ -212,7 +212,9 @@ namespace Caged
         }
 
         public TileData this[int x,int y]{
-            get{return Tiles[x,y];}
+            get{
+                if (x >= width || x < 0 || y < 0 || y >= height) { return null; }
+                return Tiles[x,y];}
         }
 
         public TileData this[float x, float y]

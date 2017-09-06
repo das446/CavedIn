@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Caged
 {
     //TODO Seperate board from game controller
     public class Board : MonoBehaviour
     {
+
+        public const string OnSetTile="Board.SetTile";
+        public const string OnPlaceTile="Board.PlaceTile";
+
         public BoardData Data;
         public BoardDisplay Display;
 
@@ -35,6 +40,13 @@ namespace Caged
             Display = GetComponent<BoardDisplay>();
             Data.Initialize();
             Display.Initialize(this);
+            players[0].Name=PlayerPrefs.GetString("Player1Name");
+            players[0].setNameText();
+            players[1].Name = PlayerPrefs.GetString("Player2Name");
+            players[1].setNameText();
+            if(PlayerPrefs.GetString("EnemyType")=="Com"){
+                players[1].GetComponent<AIPlayer>().enabled=true;
+            }
             PlayerIndex = 0;
             Player.Current = players[0];
             Player.Current.Tiles[0].GetComponent<InHandTile>().Select();
@@ -145,16 +157,24 @@ namespace Caged
                 PlayerIndex = 0;
             }
             Player.Current = players[PlayerIndex];
-            Debug.Log("Player Index="+PlayerIndex+Player.Current);
             Player.Current.Tiles[0].GetComponent<InHandTile>().Select();
         }
 
         public void EndGame()
         {
             WinScreen.SetActive(true);
+            foreach(Player p in players){
+                p.gameObject.SetActive(false);
+            }
             Text text = WinScreen.transform.GetChild(0).GetComponent<Text>();
             text.text = Player.Current.Name + " wins.\n" + players[0].Name + " " + players[0].points + " pts" +
             "                   " + players[1].Name + " " + players[1].points;
+        }
+
+
+        public void PlayAgain()
+        {
+            SceneManager.LoadScene(0);
         }
 
         public static implicit operator BoardData(Board b)

@@ -12,6 +12,7 @@ public class Color {
 	public static readonly Color Yellow = new Color("Yellow", "Amber", UnityEngine.Color.yellow);
 	public static readonly Color Black = new Color("Black", "Onyx", UnityEngine.Color.black);
 	public static readonly Color White = new Color("White", "Diamond", UnityEngine.Color.white);
+	public static readonly Color Orange = new Color("Orange", "Orangite", Colors.OrangeCrayola);
 
 	public string name;
 	public string GemName;
@@ -35,22 +36,9 @@ public class Color {
 	}
 
 	public static Color Random(){
-		int r=UnityEngine.Random.Range(0,6);
-		switch (r)
-		{
-			case 0:
-				return Red;
-			case 1:
-				return Blue;
-			case 2: 
-				return Green;
-			case 3: 
-				return Black;
-			//case 4:
-			//	return Yellow;
-			default:
-				return White;
-		}
+		Color[] colors=new Color[]{Red,Blue,Green,Black,White,Yellow};
+		int r = UnityEngine.Random.Range(0, colors.Length);
+		return colors[r];
 	}
 
 	public static implicit operator UnityEngine.Color(Color c){

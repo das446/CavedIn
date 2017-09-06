@@ -414,13 +414,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 264060548}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 267ec485d1dfd414480de97f150ae7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  WaitTime: 0.1
+  WaitTime: 0.05
   PlayingPiece: 0
 --- !u!114 &264060553
 MonoBehaviour:
@@ -441,7 +441,7 @@ MonoBehaviour:
   HandSize: 3
   PointsText: {fileID: 264060550}
   inHandY: 22.5
-  Human: 0
+  Human: 1
 --- !u!114 &281495694 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114893392314815194, guid: f6684308f18dcd1499d60f569695389e,
@@ -459,13 +459,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 285402266}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 267ec485d1dfd414480de97f150ae7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  WaitTime: 0.1
+  WaitTime: 0.05
   PlayingPiece: 0
 --- !u!1001 &301899579
 Prefab:
@@ -850,7 +850,7 @@ GameObject:
   - component: {fileID: 1227233725}
   - component: {fileID: 1227233724}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1071,6 +1071,21 @@ Prefab:
       propertyPath: Human
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114946492377926618, guid: f6684308f18dcd1499d60f569695389e,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.90507096
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946492377926618, guid: f6684308f18dcd1499d60f569695389e,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946492377926618, guid: f6684308f18dcd1499d60f569695389e,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.9044118
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114041373331300914, guid: f6684308f18dcd1499d60f569695389e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f6684308f18dcd1499d60f569695389e, type: 2}
@@ -1119,7 +1134,7 @@ MonoBehaviour:
     type: 2}
   Picture: {fileID: 281495694}
   Description: {fileID: 238085582}
-  WinAmnt: 15
+  WinAmnt: 100
   width: 10
   height: 10
   Winner: {fileID: 0}
@@ -1267,7 +1282,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1468722699}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1436418310}
+        m_MethodName: PlayAgain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1468722699
@@ -1412,8 +1438,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 417.5, y: 0.000015259}
+  m_SizeDelta: {x: -835, y: -479.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1838965978
 MonoBehaviour:
@@ -1427,7 +1453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8569383, g: 0.8341263, b: 0.97794116, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -30,6 +30,10 @@ public class Player : MonoBehaviour {
 		}
 		Tiles[0].GetComponent<InHandTile>().Select();
 	}
+
+	public void setNameText(){
+		GetComponent<Text>().text=Name;
+	}
 	
 	// Update is called once per frame
 	void Update () {
