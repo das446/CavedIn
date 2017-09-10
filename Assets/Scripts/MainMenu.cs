@@ -7,12 +7,25 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
 	public static readonly string EnemyType="EnemeyType";
-	public Text player1;
-	public Text player2;
+	public InputField player1;
+	public InputField player2;
 	public GameObject HelpScreen;
 
+	void Start(){
+		if(PlayerPrefs.HasKey("Player1Name")){
+			player1.text=PlayerPrefs.GetString("Player1Name");
+		}
+		if (PlayerPrefs.HasKey("Player2Name"))
+        {
+            player2.text = PlayerPrefs.GetString("Player2Name");
+        }
+
+	}
 	public void GoToHelp(){
 		HelpScreen.SetActive(true);
+	}
+	public void GoToLobby(){
+		SceneManager.LoadScene(2);
 	}
 
 	public void GoToVsLocal(){

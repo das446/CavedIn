@@ -27,8 +27,8 @@ namespace Caged
         public Text Description;
         public int WinAmnt;
 
-        [SerializeField] int width;
-        [SerializeField] int height;
+        [SerializeField] protected int width;
+        [SerializeField] protected int height;
 
         public Player Winner;
         public GameObject WinScreen;
@@ -41,9 +41,9 @@ namespace Caged
             Data.Initialize();
             Display.Initialize(this);
             players[0].Name=PlayerPrefs.GetString("Player1Name");
-            players[0].setNameText();
+            players[0].setName(players[0].Name);
             players[1].Name = PlayerPrefs.GetString("Player2Name");
-            players[1].setNameText();
+            players[1].setName(players[1].Name);
             if(PlayerPrefs.GetString("EnemyType")=="Com"){
                 players[1].GetComponent<AIPlayer>().enabled=true;
             }
@@ -56,6 +56,13 @@ namespace Caged
             t.AdjustDisplay();
             CreateMonsters();
 
+        }
+
+        void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Escape)){
+                Application.Quit();
+            }
         }
         public Tile AddTileToBoard(TileData t, Vector3 pos)
         {
@@ -151,6 +158,7 @@ namespace Caged
 
         public void SetNextPlayer()
         {
+            Player.Current.GetTime();
             PlayerIndex++;
             if (PlayerIndex >= players.Length)
             {

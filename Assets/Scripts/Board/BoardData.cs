@@ -13,16 +13,24 @@ namespace Caged
         public List<Vector2> FilledPositions=new List<Vector2>();
         public Monster[,] Monsters;
 
+        public TileData[] Player1Hand;
+        public TileData[] Player2Hand;
+
 
         public BoardData(int w, int h)
         {
             width = w;
             height = h;
+            Tiles=new TileData[w,h];
+            Player1Hand=new TileData[3];
+            Player2Hand=new TileData[3];
         }
         public BoardData(int w, int h, TileData[,] t, List<Vector2> filled, Monster[,] m)
         {
             width = w;
             height = h;
+            Player1Hand = new TileData[3];
+            Player2Hand = new TileData[3];
             Tiles = (TileData[,])t.Clone();
             FilledPositions = filled;
             Monsters = (Monster[,])m.Clone();

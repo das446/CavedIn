@@ -26,14 +26,6 @@ public class Color {
 	}
 
 	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public static Color Random(){
 		Color[] colors=new Color[]{Red,Blue,Green,Black,White,Yellow};
@@ -43,6 +35,23 @@ public class Color {
 
 	public static implicit operator UnityEngine.Color(Color c){
 		return c.rgb;
+	}
+
+	public static Color FromName(string Name){
+
+		//Color[] colors = new Color[] { Red, Blue, Green, Black, White, Yellow,Orange };
+		Dictionary<string, Color> dictionary=new Dictionary<string,Color>{
+			{"Red",Red},
+			{"Blue",Blue},
+			{"Green",Green},
+			{"White",White},
+			{"Black",Black},
+			{"Yellow",Yellow},
+			{"Orange",Orange}
+		};
+		return dictionary[Name];
+
+
 	}
 }
 }

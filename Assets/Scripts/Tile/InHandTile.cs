@@ -14,6 +14,7 @@ namespace Caged
         public GameObject Highlight;
         public float z;
         public Player Controller;
+        public int i;
         void Start()
         {
             Default = Camera.main.WorldToScreenPoint(transform.position);
@@ -24,7 +25,6 @@ namespace Caged
             }
         }
 
-        // Update is called once per frame
         void Update()
         {
             
@@ -40,16 +40,19 @@ namespace Caged
                 Highlight.SetActive(false);
             }
 
+
+
         }
 
         void OnMouseDown()
         {
-            Select();
+          if(Controller.Human){Select();}
         }
 
-        public void Select()
+        public void Select(bool SendToServer=true)
         {
             if(Controller!=Player.Current){return;}
+            bool already=selectedTile==this;
             selectedTile = tile;
             if (GhostTile.main == null)
             {
@@ -62,6 +65,15 @@ namespace Caged
             }
             GhostTile.main.ghostTile.Set(selectedTile);
             GhostTile.main.ghostTile.Display.AdjustDisplay();
+
+            if(GameManager.Instance!=null&&!already&&SendToServer){
+                ServerSelect();
+            }
+        }
+
+        void ServerSelect(){
+            NetworkPlayer np=(NetworkPlayer)Controller;
+            np.client.Send("Select|"+np.Name+"|"+i);
         }
     }
 }

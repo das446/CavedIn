@@ -3,44 +3,92 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Caged{
-public class Player : MonoBehaviour {
+namespace Caged
+{
+    public class Player : MonoBehaviour
+    {
 
-	public Tile[] Tiles;
-	public Tile prefabTile;
-	public int points;
-	public string Name;
-	public int HandSize;
+        public Tile[] Tiles;
+        public Tile prefabTile;
+        public int points;
+        public string Name;
+        public int HandSize;
 
-	public Text PointsText;
-	public float inHandY;
-	public bool Human;
+        public Text PointsText;
+        public float inHandY;
+        public bool Human;
 
-	public static Player Current;
-	// Use this for initialization
-	void Start () {
-		Tiles=new Tile[HandSize];
-		float mid=20f;
-		for(int i=0;i<HandSize;i++){
-			Tiles[i]=Instantiate(prefabTile,new Vector2(mid+5*i,inHandY),Quaternion.identity);
-			Tiles[i].RandomizeColors();
-			Tiles[i].Display.AdjustDisplay();
-			Tiles[i].GetComponent<InHandTile>().enabled=true;
-			Tiles[i].GetComponent<InHandTile>().Controller=this;
+        public float TimeLeft = 60;
+        public float MaxTime = 120;
+
+        public float MaxRollover = 15;
+        public float AddedTime = 15;
+		public Text TimeText;
+
+        public static Player Current;
+        protected float mid = 20f;
+
+       
+        // Use this for initialization
+        void Start()
+        {
+            Tiles = new Tile[HandSize];
+            if(GameManager.Instance==null){CreateStartHand();
+                Tiles[0].GetComponent<InHandTile>().Select();
+            }
+        }
+
+        public void setName(string text)
+        {
+            Name=text;
+            GetComponent<Text>().text = text;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (Current == null)
+            {
+                Current = this;
+            }
+            PointsText.text = Name + ":" + points;
+            if (Player.Current == this)
+            {
+                TimeLeft -= Time.deltaTime;
+				TimeText.text=toSeconds(TimeLeft);
+
+                if (TimeLeft <= 0)
+                {
+					//Do a random move, probably taking from AI
+                }
+            }
+        }
+
+        public void GetTime()
+        {
+            float rollover = TimeLeft > MaxRollover ? MaxRollover : TimeLeft;
+            float toAdd = rollover + AddedTime;
+            TimeLeft += toAdd;
+			TimeLeft=TimeLeft>MaxTime?MaxTime:TimeLeft;
+        }
+
+		public string toSeconds(float n){
+			int min=(int)(n/60);
+			int sec=(int)n%60;
+			string s2=sec<10?"0"+sec:sec+"";
+			string time=min+":"+s2;
+			return time;
 		}
-		Tiles[0].GetComponent<InHandTile>().Select();
-	}
 
-	public void setNameText(){
-		GetComponent<Text>().text=Name;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Current==null){
-			Current=this;
-		}
-		PointsText.text=Name+":"+points;
-	}
-}
+        public void CreateStartHand(){
+            for (int i = 0; i < HandSize; i++)
+            {
+                Tiles[i] = Instantiate(prefabTile, new Vector2(mid + 5 * i, inHandY), Quaternion.identity);
+                Tiles[i].RandomizeColors();
+                Tiles[i].Display.AdjustDisplay();
+                Tiles[i].GetComponent<InHandTile>().enabled = true;
+                Tiles[i].GetComponent<InHandTile>().Controller = this;
+            }
+        }
+    }
 }

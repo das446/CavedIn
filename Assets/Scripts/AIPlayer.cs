@@ -31,14 +31,14 @@ namespace Caged
 
         public float WaitTime = 1;
         public bool PlayingPiece = false;
-        // Use this for initialization
+
+        public float startWait=1;
         void Start()
         {
             player = GetComponent<Player>();
             player.Human = false;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Z))
@@ -62,7 +62,7 @@ namespace Caged
         Move DecideMove()
         {
             System.Random randomizer = new System.Random();
-            Move[] moves = ValidMoves().ToArray();
+            Move[] moves = ValidMoves(player).ToArray();
             Move[] capturingMoves = moves.Where(x => x.capture).ToArray();
             if(capturingMoves.Length>0){
                 return capturingMoves[randomizer.Next(capturingMoves.Length)];    
@@ -74,7 +74,6 @@ namespace Caged
             //SetGhost
             Tile tile = player.Tiles[move.tile];
             tile.GetComponent<InHandTile>().Select();
-
             //MoveGhost
             yield return MoveGhostTileToPos(move);
             for (int i = 0; i < move.rotations; i++)
@@ -92,6 +91,7 @@ namespace Caged
             float scale = Board.Main.scale;
             Vector2 targetPos = move.pos * scale;
             Vector2 currentPos = GhostTile.main.transform.position;
+            yield return new WaitForSeconds(startWait);
             while (targetPos != currentPos)
             {
                 if (currentPos.x < targetPos.x)
@@ -127,7 +127,9 @@ namespace Caged
             }
         }
 
-        public HashSet<Move> ValidMoves()
+        //Static so these can be reused by other classes
+        //May seperate into another class
+        public static HashSet<Move> ValidMoves(Player player)
         {
             HashSet<Vector2> Positions = ValidPositions(Board.Main.Data);
             HashSet<Move> Moves = new HashSet<Move>();
@@ -158,7 +160,7 @@ namespace Caged
 
         }
 
-        bool WillCapture(Move move, Board board)
+        public static bool WillCapture(Move move, Board board)
         {
             int x = (int)move.pos.x;
             int y = (int)move.pos.y;
@@ -170,7 +172,7 @@ namespace Caged
             return UR || DR || DL || UL;
         }
 
-        public HashSet<Vector2> ValidPositions(BoardData board)
+        public static HashSet<Vector2> ValidPositions(BoardData board)
         {
             HashSet<Vector2> Positions = new HashSet<Vector2>();
             foreach (Vector2 v in board.FilledPositions)

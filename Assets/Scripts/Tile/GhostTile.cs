@@ -21,6 +21,7 @@ namespace Caged
             ghostTile.Display.transparency = transparency;
             ghostTile.Display.AdjustDisplay();
             scale = 3;
+            StartCoroutine(SendPositionToServer());
         }
 
         // Update is called once per frame
@@ -29,6 +30,11 @@ namespace Caged
             if (ShouldRotate())
             {
                 StartCoroutine(ghostTile.Rotate());
+                if(GameManager.Instance!=null){
+                    NetworkPlayer np=(NetworkPlayer)Player.Current;
+                    np.Send("GhostRot|"+np.Name);
+                    Debug.Log("Sent Rotate Ghost");
+                }
             }
 
             if (Player.Current.Human)
@@ -65,6 +71,7 @@ namespace Caged
                 ghostTile.AdjustDisplay();
                 Board.Main.SetNextPlayer();
             }
+
         }
 
         public bool ShouldRotate()
@@ -79,8 +86,26 @@ namespace Caged
             if (y < 0) { y = 0; }
             if (x > Board.Main.TotalWidth()) { x = (int)Board.Main.TotalWidth(); }
             if (y > Board.Main.TotalHeight()) { y = (int)Board.Main.TotalHeight(); }
+            if(Board.Main.Data.Tiles==null){Debug.Log("Board.Main is null");}
+
             if (Board.Main.Data.Tiles[x / scale, y / scale] != null) { return transform.position; }
             return new Vector3(x, y, 0);
+        }
+
+        IEnumerator SendPositionToServer()
+        {
+            while (true)
+            {
+                if (Player.Current==null){yield return new WaitForSeconds(1);}
+                if (Player.Current.Human && GameManager.Instance != null)
+                {
+                    NetworkPlayer np = (NetworkPlayer)Player.Current;
+                    int x = (int)transform.position.x;
+                    int y = (int)transform.position.y;
+                    np.client.Send("SetGhost|" + Player.Current.Name + "|" + x + "|" + y);
+                }
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 }

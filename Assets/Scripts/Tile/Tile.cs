@@ -9,28 +9,31 @@ namespace Caged
         public TileData Data;
         public TileDisplay Display;
 
-        void Initialize(){
-            Data=new TileData();
-            Display=GetComponent<TileDisplay>();
-            Display.tile=this;
-            Display.Data=Data;
+        void Initialize()
+        {
+            Data = new TileData();
+            Display = GetComponent<TileDisplay>();
+            Display.tile = this;
+            Display.Data = Data;
         }
 
-        public string toString(){
+        public string toString()
+        {
             return Data.toString();
         }
 
         public IEnumerator Rotate()
         {
-            Debug.Log("Rotate");
             yield return StartCoroutine(Display.Rotate());
         }
 
-        public void AdjustDisplay(){
+        public void AdjustDisplay()
+        {
             Display.AdjustDisplay();
         }
 
-        public void RandomizeColors(){
+        public void RandomizeColors()
+        {
             Data.RandomizeColors();
             Display.AdjustDisplay();
         }
@@ -46,8 +49,14 @@ namespace Caged
         }
         public void Set(Color up, Color right, Color down, Color left)
         {
-           Data.Set(up,right,down,left);
-           Display.AdjustDisplay();
+            Data.Set(up, right, down, left);
+            Display.AdjustDisplay();
+        }
+
+        public void Set(string up, string right, string down, string left)
+        {
+            Data.Set(Color.FromName(up), Color.FromName(right), Color.FromName(down), Color.FromName(left));
+            Display.AdjustDisplay();
         }
 
         public static implicit operator TileData(Tile t)
