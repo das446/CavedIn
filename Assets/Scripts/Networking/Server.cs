@@ -26,6 +26,8 @@ public class Server : MonoBehaviour
     public bool[,] Monsters; 
     bool MonstersMade;
 
+    TileData nextTile;
+
     public void Init()
     {
         DontDestroyOnLoad(gameObject);
@@ -188,6 +190,9 @@ public class Server : MonoBehaviour
             case "GhostRot":
                 Broadcast("GhostRot",ClientsExcept(aData[1]));
                 break;
+            case "PlaceTile":
+                UpdateBoard(data);
+                break;
 
             default:
                 break;
@@ -264,6 +269,18 @@ public class Server : MonoBehaviour
             }
         }
         Broadcast(msg,clients);
+    }
+
+    //PlaceTile|David|0|x|y|Blue|Red|Green|Blue
+    void UpdateBoard(string data){
+
+        TileData td=new TileData();
+        td.RandomizeColors();
+        //PlaceTile|David|0|x|y|Blue|Red|Green|Blue|NewUp|NewRight|NewDown|NewLeft
+        data=data+"|"+td.Up.name+"|"+td.Right.name+"|"+td.Down.name+"|"+td.Left.name;
+        Broadcast(data,clients);
+
+
     }
 
     void AddFirstTile(){

@@ -1606,10 +1606,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1471727253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c716e8efa75f54789f45bb6ec6d78e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e48c47187fe787468a0b8f0dfcce409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostTile: {fileID: 0}
+  ghostTile: {fileID: 1645951120}
   transparency: 1
   TestingFollow: 0
   i: 0
@@ -1669,6 +1669,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63ee4dadac76886469d8e5aba060e011, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1645951120 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114314598403562784, guid: 63ee4dadac76886469d8e5aba060e011,
+    type: 2}
+  m_PrefabInternal: {fileID: 1645951119}
+  m_Script: {fileID: 11500000, guid: c53c9a7bf2553ad46afe73e350e8143a, type: 3}
 --- !u!1 &1838965976
 GameObject:
   m_ObjectHideFlags: 0

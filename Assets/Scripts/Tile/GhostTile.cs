@@ -19,6 +19,7 @@ namespace Caged
         {
             main = this;
             ghostTile = GetComponent<Tile>();
+            Destroy(GetComponent<InHandTile>());
             ghostTile.Display.transparency = transparency;
             ghostTile.Display.AdjustDisplay();
             scale = 3;
@@ -59,8 +60,9 @@ namespace Caged
             }
         }
 
-        public void Place()
+        public virtual void Place()
         {
+            Debug.Log("Should be ghost");
             Tile PlacedTile = Board.Main.AddTileToBoard(ghostTile, transform.position / scale);
             if (PlacedTile != null)
             {

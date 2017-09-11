@@ -46,7 +46,8 @@ namespace Caged
 
         void OnMouseDown()
         {
-          if(Controller.Human){Select();}
+
+          if(Controller.Human&&enabled){Select();}
         }
 
         public void Select(bool SendToServer=true)

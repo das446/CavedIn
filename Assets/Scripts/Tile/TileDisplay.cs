@@ -50,7 +50,7 @@ namespace Caged
             Vector3 temp = target;
             target.z = target.z - 90;
             if (target.z < 0) { target.z += 360; }
-            while (Mathf.Abs(transform.eulerAngles.z - target.z) > 3f)
+            while (Mathf.Abs(transform.eulerAngles.z - target.z) > 5f)
             {
                 temp.z -= Time.deltaTime * rotateSpeed;
                 transform.eulerAngles = temp;

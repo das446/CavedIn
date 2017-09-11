@@ -5,214 +5,252 @@ using System.IO;
 using System.Net.Sockets;
 using System;
 using System.Linq;
-using Caged;
 
-public class Client : MonoBehaviour
+
+namespace Caged
 {
-
-    bool socketReady;
-    public string clientName;
-    TcpClient socket;
-    NetworkStream stream;
-    StreamWriter writer;
-    StreamReader reader;
-    List<GameClient> Players = new List<GameClient>();
-    public Caged.NetworkPlayer player;
-    public bool Host;
-    public Client Opponent;
-
-    void Start()
+    public class Client : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-    }
 
-    void Update()
-    {
-        if (socketReady)
+        bool socketReady;
+        public string clientName;
+        TcpClient socket;
+        NetworkStream stream;
+        StreamWriter writer;
+        StreamReader reader;
+        List<GameClient> Players = new List<GameClient>();
+        public Caged.NetworkPlayer player;
+        public bool Host;
+        public Client Opponent;
+
+        void Start()
         {
-            if (stream.DataAvailable)
+            DontDestroyOnLoad(gameObject);
+        }
+
+        void Update()
+        {
+            if (socketReady)
             {
-                string data = reader.ReadLine();
-                if (data != null)
+                if (stream.DataAvailable)
                 {
-                    OnIncomingData(data);
+                    string data = reader.ReadLine();
+                    if (data != null)
+                    {
+                        OnIncomingData(data);
+                    }
                 }
             }
         }
-    }
 
-    public bool ConnectToServer(string host, int port)
-    {
-        if (socketReady) { return false; }
-
-        try
+        public bool ConnectToServer(string host, int port)
         {
-            socket = new TcpClient(host, port);
-            stream = socket.GetStream();
-            writer = new StreamWriter(stream);
-            reader = new StreamReader(stream);
+            if (socketReady) { return false; }
 
-            socketReady = true;
+            try
+            {
+                socket = new TcpClient(host, port);
+                stream = socket.GetStream();
+                writer = new StreamWriter(stream);
+                reader = new StreamReader(stream);
 
+                socketReady = true;
+
+            }
+            catch (Exception e)
+            {
+                GameManager.debug("Socket Error : " + e.Message);
+            }
+
+            return socketReady;
         }
-        catch (Exception e)
+
+        void OnIncomingData(string data)
         {
-            GameManager.debug("Socket Error : " + e.Message);
+            string[] aData = data.Split('|');
+
+            switch (aData[0])
+            {
+                case "SWHO":
+                    for (int i = 1; i < aData.Length; i++)
+                    {
+                        UserConnected(aData[i], false);
+                    }
+                    Send("CWHO|" + clientName);
+                    break;
+
+                case "SCNN":
+                    UserConnected(aData[1], true);
+                    break;
+
+                case "SetHandTiles":
+                    Debug.Log(clientName + " recieved " + data);
+                    SetHandTiles(aData);
+                    break;
+
+                case "MakeMonsters":
+                    ((NetworkBoard)(Board.Main)).CreateMonstersFromServer(aData);
+                    break;
+
+                case "Current":
+                    player.setCurrentPlayer(aData[1]);
+                    player.CurrentPlayerName = aData[1];
+                    
+                    break;
+
+                case "Selected":
+                    SelectFromServer(aData);
+                    break;
+
+                case "SetGhost":
+                    int x = int.Parse(aData[1]);
+                    int y = int.Parse(aData[2]);
+                    GhostTile.main.transform.position = new Vector2(x, y);
+                    break;
+
+                case "GhostRot":
+                    StartCoroutine(GhostTile.main.ghostTile.Rotate());
+                    break;
+
+                case "PlaceTile":
+                    PlaceTileFromServer(aData);
+                    break;
+
+                default:
+                    break;
+            }
         }
-
-        return socketReady;
-    }
-
-    void OnIncomingData(string data)
-    {
-        string[] aData = data.Split('|');
-
-        switch (aData[0])
+        public void Send(string data)
         {
-            case "SWHO":
-                for (int i = 1; i < aData.Length; i++)
-                {
-                    UserConnected(aData[i], false);
-                }
-                Send("CWHO|" + clientName);
-                break;
-
-            case "SCNN":
-                UserConnected(aData[1], true);
-                break;
-
-            case "SetHandTiles":
-                Debug.Log(clientName + " recieved " + data);
-                SetHandTiles(aData);
-                break;
-
-            case "MakeMonsters":
-                ((NetworkBoard)(Board.Main)).CreateMonstersFromServer(aData);
-                break;
-
-            case "Current":
-                player.setCurrentPlayer(aData[1]);
-                player.CurrentPlayerName=aData[1];
-                break;
-
-            case "Selected":
-                SelectFromServer(aData);
-                break;
-
-            case "SetGhost":
-                int x=int.Parse(aData[1]);
-                int y=int.Parse(aData[2]);
-                GhostTile.main.transform.position=new Vector2(x,y);
-                break;
-            
-            case "GhostRot":
-                StartCoroutine(GhostTile.main.ghostTile.Rotate());
-                break;
-
-            default:
-                break;
+            if (!socketReady)
+            {
+                return;
+            }
+            writer.WriteLine(data);
+            writer.Flush();
         }
-    }
-    public void Send(string data)
-    {
-        if (!socketReady)
+
+        public void CloseSocket()
         {
-            return;
-        }
-        writer.WriteLine(data);
-        writer.Flush();
-    }
+            if (!socketReady)
+            {
+                return;
+            }
 
-    public void CloseSocket()
-    {
-        if (!socketReady)
+            writer.Close();
+            reader.Close();
+            socket.Close();
+            socketReady = false;
+        }
+
+        void OnIncominngData(ServerClient c, string data)
         {
-            return;
+            OnIncomingData(data);
         }
 
-        writer.Close();
-        reader.Close();
-        socket.Close();
-        socketReady = false;
-    }
-
-    void OnIncominngData(ServerClient c, string data)
-    {
-        OnIncomingData(data);
-    }
-
-    public IEnumerator RequestUntil(Func<bool> condition,string msg){
-        while(!condition()){
-            Send(msg);
-            yield return new WaitForSeconds(1);
-        }
-    }
-
-    public IEnumerator RequestWhile(Func<bool> condition, string msg)
-    {
-        while (condition())
+        public IEnumerator RequestUntil(Func<bool> condition, string msg)
         {
-            Send(msg);
-            yield return new WaitForSeconds(1);
+            while (!condition())
+            {
+                Send(msg);
+                yield return new WaitForSeconds(1);
+            }
         }
-    }
 
-    void UserConnected(string Name, bool Host)
-    {
-        if (Name == "" || Players.Any(x => x.name == Name)) { return; }
-        GameClient c = new GameClient();
-        c.name = Name;
-        Players.Add(c);
-        if (!GameManager.Instance.Clients.Any(x => x.clientName == Name))
+        public IEnumerator RequestWhile(Func<bool> condition, string msg)
         {
-            Client C = Instantiate(GameManager.Instance.clientPrefab).GetComponent<Client>();
-            C.clientName = Name;
-            C.name = Name;
-            GameManager.Instance.Clients.Add(C);
+            while (condition())
+            {
+                Send(msg);
+                yield return new WaitForSeconds(1);
+            }
         }
-        if (Players.Count == 2)
+
+        void UserConnected(string Name, bool Host)
         {
-            GameManager.Instance.StartGame();
+            if (Name == "" || Players.Any(x => x.name == Name)) { return; }
+            GameClient c = new GameClient();
+            c.name = Name;
+            Players.Add(c);
+            if (!GameManager.Instance.Clients.Any(x => x.clientName == Name))
+            {
+                Client C = Instantiate(GameManager.Instance.clientPrefab).GetComponent<Client>();
+                C.clientName = Name;
+                C.name = Name;
+                GameManager.Instance.Clients.Add(C);
+            }
+            if (Players.Count == 2)
+            {
+                GameManager.Instance.StartGame();
+            }
         }
-    }
 
-    void OnApplicationQuit()
-    {
-        CloseSocket();
-    }
-
-    void OnDisable()
-    {
-        CloseSocket();
-    }
-    void SetHandTiles(string[] aData)
-    {
-        player.client=this;
-        if (aData[1] == clientName)
+        void OnApplicationQuit()
         {
-            player.Tiles[0].Set(aData[2], aData[3], aData[4], aData[5]);
-            player.Tiles[1].Set(aData[6], aData[7], aData[8], aData[9]);
-            player.Tiles[2].Set(aData[10], aData[11], aData[12], aData[13]);
+            CloseSocket();
         }
-        else
+
+        void OnDisable()
         {
-            Opponent.player.Tiles[0].Set(aData[2], aData[3], aData[4], aData[5]);
-            Opponent.player.Tiles[1].Set(aData[6], aData[7], aData[8], aData[9]);
-            Opponent.player.Tiles[2].Set(aData[10], aData[11], aData[12], aData[13]);
+            CloseSocket();
         }
+        void SetHandTiles(string[] aData)
+        {
+            player.client = this;
+            if (aData[1] == clientName)
+            {
+                player.Tiles[0].Set(aData[2], aData[3], aData[4], aData[5]);
+                player.Tiles[1].Set(aData[6], aData[7], aData[8], aData[9]);
+                player.Tiles[2].Set(aData[10], aData[11], aData[12], aData[13]);
+            }
+            else
+            {
+                Opponent.player.Tiles[0].Set(aData[2], aData[3], aData[4], aData[5]);
+                Opponent.player.Tiles[1].Set(aData[6], aData[7], aData[8], aData[9]);
+                Opponent.player.Tiles[2].Set(aData[10], aData[11], aData[12], aData[13]);
+            }
+        }
+
+        void SelectFromServer(string[] data)
+        {
+            Caged.NetworkPlayer networkPlayer = player.picked(data[1]);
+            if (networkPlayer != player)
+            {
+                networkPlayer.Tiles[int.Parse(data[2])].GetComponent<InHandTile>().Select(false);
+            }
+        }
+
+        //PlaceTile|David|0|x|y|Blue|Red|Green|Blue|NewUp|NewRight|NewDown|NewLeft
+        void PlaceTileFromServer(string[] data)
+        {
+            NetworkPlayer player = (NetworkPlayer)this.player.picked(data[1]);
+            TileData tileData=new TileData(data[5],data[6],data[7],data[8]);
+            Vector2 pos=new Vector2(int.Parse(data[3]),int.Parse(data[4]));
+
+            int i=int.Parse(data[2]);
+            Tile InHandTile=player.Tiles[i];
+
+            Tile PlacedTile=Board.Main.AddTileToBoard(tileData,pos/Board.Main.scale);
+            if(PlacedTile==null){return;}
+
+            PlacedTile.Set(tileData);
+            PlacedTile.AdjustDisplay();
+
+            TileData newTile=new TileData(data[9], data[10], data[11], data[12]);
+
+            InHandTile.Data.Set(newTile);
+            InHandTile.Display.AdjustDisplay();
+            GhostTile.main.ghostTile.Set(newTile);
+            GhostTile.main.ghostTile.AdjustDisplay();
+            Board.Main.SetNextPlayer();
+            Debug.Log("CurrentPlayer="+Player.Current.Name);
+        }
+
     }
 
-    void SelectFromServer(string[] data){
-        Caged.NetworkPlayer networkPlayer=player.picked(data[1]);
-        if(networkPlayer!=player){
-            networkPlayer.Tiles[int.Parse(data[2])].GetComponent<InHandTile>().Select(false);
-        }
+    public class GameClient
+    {
+        public string name;
+        public bool isHost;
     }
-
-}
-
-public class GameClient
-{
-    public string name;
-    public bool isHost;
 }

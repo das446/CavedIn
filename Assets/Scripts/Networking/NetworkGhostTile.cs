@@ -6,7 +6,7 @@ namespace Caged
 {
     public class NetworkGhostTile : GhostTile
     {
-        new public void Place()
+        public override void Place()
         {
             TileData t = ghostTile.Data;
             bool canPlaceTile = Board.Main.CanPlayTile(ghostTile, transform.position / scale);
@@ -15,10 +15,12 @@ namespace Caged
 				int x=(int)transform.position.x;
 				int y=(int)transform.position.y;
                 NetworkPlayer np = (NetworkPlayer)Player.Current;
-                np.Send("PlaceTile|" + np.name + "|" + i + "|" + x + "|" + y + "|" +
-                        t.Up + "|" + t.Right + "|" + t.Down + "|" + t.Left);
+				string msg="PlaceTile|" + np.Name + "|" + i + "|" + x + "|" + y + "|" +
+                        t.Up.name + "|" + t.Right.name + "|" + t.Down.name + "|" + t.Left.name;
+				Debug.Log(msg);
+                np.Send(msg);
 
-				//PlacedTile|David|0|x|y|Blue|Red|Green|Blue
+				//PlaceTile|David|0|x|y|Blue|Red|Green|Blue
 
                 //PlacedTile.Set(ghostTile.Data);
                 //PlacedTile.AdjustDisplay();

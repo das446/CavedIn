@@ -28,6 +28,11 @@ namespace Caged
             NetworkPlayer player=picked(Name);
             Current=player;
             Current.Tiles[0].GetComponent<InHandTile>().Select();
+            for(int i=0;i<Board.Main.players.Length;i++){
+                if(Board.Main.players[i]==Current){
+                    Board.Main.PlayerIndex=i;
+                }
+            }
         }
 
         public void Send(string msg){

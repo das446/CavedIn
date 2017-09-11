@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using System.Net;
+using System.Net.Sockets;
+using System.Linq;
 
 namespace Caged
 {
@@ -26,6 +29,7 @@ namespace Caged
         public static int portNumber = 6321;
 
         public Text DebugText;
+		public Text IP;
 
         public List<Client> Clients;
 
@@ -58,6 +62,7 @@ namespace Caged
                 c.clientName = ClientName;
                 if (c.clientName == "") { c.clientName = "Host"; }
                 c.ConnectToServer("127.0.0.1", portNumber);
+				IP.text="Waiting for another player...\nYoure IP is "+	LocalIPAddress().ToString();
             }
             catch (Exception e)
             {
@@ -150,6 +155,26 @@ namespace Caged
         public static void debug(string s)
         {
             Instance.DebugText.text += s + "\n";
+			Instance.Invoke("ClearDebug",10);
+        }
+
+		public void ClearDebug(){
+			Instance.DebugText.text="";
+		}
+
+
+		private IPAddress LocalIPAddress()
+        {
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                return null;
+            }
+
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+
+            return host
+                .AddressList
+                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
         }
 
 
