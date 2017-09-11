@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Linq;
 
-namespace Caged
+namespace Caved
 {
     public class GameManager : MonoBehaviour
     {

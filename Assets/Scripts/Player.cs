@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Caged
+namespace Caved
 {
     public class Player : MonoBehaviour
     {

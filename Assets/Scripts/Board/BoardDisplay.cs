@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Caged
+namespace Caved
 {
     public class BoardDisplay : MonoBehaviour
     {

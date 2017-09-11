@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Caged{
+namespace Caved{
 	[System.Serializable]
 public class Color {
 

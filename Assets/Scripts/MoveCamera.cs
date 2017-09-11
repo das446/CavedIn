@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-namespace Caged
+namespace Caved
 {
     public class MoveCamera : MonoBehaviour
     {

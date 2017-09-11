@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-namespace Caged
+namespace Caved
 {
     //TODO Seperate board from game controller
     public class Board : MonoBehaviour

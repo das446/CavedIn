@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 
 
-namespace Caged
+namespace Caved
 {
     public class Client : MonoBehaviour
     {
@@ -19,7 +19,7 @@ namespace Caged
         StreamWriter writer;
         StreamReader reader;
         List<GameClient> Players = new List<GameClient>();
-        public Caged.NetworkPlayer player;
+        public Caved.NetworkPlayer player;
         public bool Host;
         public Client Opponent;
 
@@ -213,7 +213,7 @@ namespace Caged
 
         void SelectFromServer(string[] data)
         {
-            Caged.NetworkPlayer networkPlayer = player.picked(data[1]);
+            Caved.NetworkPlayer networkPlayer = player.picked(data[1]);
             if (networkPlayer != player)
             {
                 networkPlayer.Tiles[int.Parse(data[2])].GetComponent<InHandTile>().Select(false);

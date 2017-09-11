@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-namespace Caged
+namespace Caved
 {
     public class AIPlayer : MonoBehaviour
     {
