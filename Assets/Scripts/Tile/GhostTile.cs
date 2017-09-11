@@ -52,7 +52,7 @@ namespace Caved
                     Place();
                 }
             }
-            else if(TestingFollow){
+            else if(TestingFollow&&!Player.Current.Human){
                 Vector3 p= Camera.main.transform.position;
                 p.x=transform.position.x+7.5f;
                 p.y=transform.position.y;

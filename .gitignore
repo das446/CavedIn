@@ -2,11 +2,11 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
-/Assets/AssetStoreTools*
-/Assets/Fork Particle Variety Pack FX/
-/Assets/Gem/
-/Assets/GemExample/
-/Assets/Particle Ribbon by Moonflower Carnivore
+/[Aa]ssets/AssetStoreTools*
+/[Aa]ssets/[Ff]ork\ [Pp]article\ [Vv]ariety\ [Pp]ack [Ff][Xx]/
+/[Aa]ssets/[Gg]em/
+/[Aa]ssets/[Gg]em[Ee]xample/
+/[Aa]ssets/[Pp]article\ [Rr]ibbon\ by\ [Mm]oonflower\ [Cc]arnivore
 
 # Visual Studio 2015 cache directory
 /.vs/

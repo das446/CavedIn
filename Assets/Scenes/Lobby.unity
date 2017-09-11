@@ -286,7 +286,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Waiting for another player...
+  m_Text: 'Your IP
+
+    Waiting for another player...'
 --- !u!222 &119819025
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1206,7 +1208,10 @@ MonoBehaviour:
   serverMenu: {fileID: 618124898}
   connectMenu: {fileID: 91498597}
   ConnectingText: {fileID: 1324018475}
+  server: {fileID: 0}
   DebugText: {fileID: 1725665733}
+  IP: {fileID: 119819024}
+  Clients: []
 --- !u!4 &846213930
 Transform:
   m_ObjectHideFlags: 0
