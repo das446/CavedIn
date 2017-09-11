@@ -1460,7 +1460,7 @@ MonoBehaviour:
   - {fileID: 285402267}
   - {fileID: 264060551}
   PlayerIndex: 0
-  MonstersAmnt: 10
+  MonstersAmnt: 20
   MonsterPrefab: {fileID: 114808904109025090, guid: c72dcea9e23c7a741abbb300a4d9f898,
     type: 2}
   Picture: {fileID: 281495694}
@@ -1470,6 +1470,7 @@ MonoBehaviour:
   height: 10
   Winner: {fileID: 0}
   WinScreen: {fileID: 1838965976}
+  MonstersSet: 0
 --- !u!1 &1468722696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1612,7 @@ MonoBehaviour:
   ghostTile: {fileID: 0}
   transparency: 1
   TestingFollow: 0
+  i: 0
 --- !u!224 &1497785756 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224372157510381170, guid: f6684308f18dcd1499d60f569695389e,

@@ -32,6 +32,7 @@ namespace Caged
 
         public Player Winner;
         public GameObject WinScreen;
+        public bool MonstersSet;
 
         void Start()
         {
@@ -99,6 +100,10 @@ namespace Caged
         public bool CanPlayTile(Tile t, int x, int y)
         {
             return Data.CanPlayTile(t, x, y);
+        }
+        public bool CanPlayTile(Tile t, Vector2 p)
+        {
+            return Data.CanPlayTile(t, (int)p.x, (int)p.y);
         }
         public TileData Above(int x, int y)
         {

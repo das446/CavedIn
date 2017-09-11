@@ -86,6 +86,10 @@ public class Client : MonoBehaviour
                 SetHandTiles(aData);
                 break;
 
+            case "MakeMonsters":
+                ((NetworkBoard)(Board.Main)).CreateMonstersFromServer(aData);
+                break;
+
             case "Current":
                 player.setCurrentPlayer(aData[1]);
                 player.CurrentPlayerName=aData[1];
@@ -139,22 +143,18 @@ public class Client : MonoBehaviour
 
     public IEnumerator RequestUntil(Func<bool> condition,string msg){
         while(!condition()){
-            Debug.Log("Request until "+msg);
             Send(msg);
             yield return new WaitForSeconds(1);
         }
-        Debug.Log("Request Finished");
     }
 
     public IEnumerator RequestWhile(Func<bool> condition, string msg)
     {
         while (condition())
         {
-            Debug.Log("Request until " + msg);
             Send(msg);
             yield return new WaitForSeconds(1);
         }
-        Debug.Log("Request Finished");
     }
 
     void UserConnected(string Name, bool Host)

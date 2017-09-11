@@ -69,6 +69,7 @@ namespace Caged
             if(GameManager.Instance!=null&&!already&&SendToServer){
                 ServerSelect();
             }
+            GhostTile.main.i=i;
         }
 
         void ServerSelect(){

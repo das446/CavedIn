@@ -10,8 +10,9 @@ namespace Caged
         public static GhostTile main;
         public float transparency;
         int uiWidth = 1000;
-        int scale;
+        protected int scale;
         public bool TestingFollow=false;
+        public int i;
 
         // Use this for initialization
         void Start()
@@ -86,7 +87,6 @@ namespace Caged
             if (y < 0) { y = 0; }
             if (x > Board.Main.TotalWidth()) { x = (int)Board.Main.TotalWidth(); }
             if (y > Board.Main.TotalHeight()) { y = (int)Board.Main.TotalHeight(); }
-            if(Board.Main.Data.Tiles==null){Debug.Log("Board.Main is null");}
 
             if (Board.Main.Data.Tiles[x / scale, y / scale] != null) { return transform.position; }
             return new Vector3(x, y, 0);

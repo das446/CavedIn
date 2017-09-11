@@ -143,6 +143,7 @@ namespace Caged
             Player1.client.Send("GetTilesStart|");
             StartCoroutine(Player1.client.RequestUntil(() => Player1.Tiles[2] != null, "GetTilesStart|"));
             StartCoroutine(Player1.client.RequestWhile(() => String.IsNullOrEmpty(Player1.CurrentPlayerName), "Current?"));
+            StartCoroutine(Player1.client.RequestUntil(() => Board.Main.MonstersSet, "MakeMonsters"));
 
         }
 

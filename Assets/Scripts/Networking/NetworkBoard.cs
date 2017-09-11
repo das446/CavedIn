@@ -29,9 +29,19 @@ namespace Caged
 			Tile t = AddTileToBoard(tileData, new Vector3(width / 2, height / 2));
             t.Data = tileData;
             t.AdjustDisplay();
-            CreateMonsters();
 			GameManager.Instance.InitializeGame();
 			//Player.Current.Tiles[0].GetComponent<InHandTile>().Select();
 		}
+
+        public void CreateMonstersFromServer(string[] data)
+        {
+            if(MonstersSet){return;}
+            for(int i=1;i<data.Length-1;i+=2){
+                int x=int.Parse(data[i]);
+                int y=int.Parse(data[i+1]);
+                CreateMonster(x,y);
+            }
+            MonstersSet=true;
+        }
     }
 }

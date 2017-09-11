@@ -23,7 +23,8 @@ public class Server : MonoBehaviour
     public BoardData board;
 
     string CurrentPlayer;
-
+    public bool[,] Monsters; 
+    bool MonstersMade;
 
     public void Init()
     {
@@ -157,7 +158,7 @@ public class Server : MonoBehaviour
         string[] aData = data.Split('|');
         //if(String.IsNullOrEmpty(aData[1])){return;}
 
-        Debug.Log("Server Recieve:"+data);
+        //Debug.Log("Server Recieve:"+data);
         switch (aData[0])
         {
             case "CWHO":
@@ -166,12 +167,17 @@ public class Server : MonoBehaviour
                 break;
 
             case "GetTilesStart":
+                AddFirstTile();
                 MakeHand(aData[1]);
                 SendHand(aData[1]);
                 break;
 
             case "Current?":
                 Broadcast("Current|"+CurrentPlayer,clients);
+                break;
+            case "MakeMonsters":
+                MakeMonsters();
+                SendMonsters();
                 break;
             case "Select":
                 Broadcast("Selected|"+aData[1]+"|"+aData[2],ClientsExcept(aData[1]));
@@ -223,6 +229,46 @@ public class Server : MonoBehaviour
             t.RandomizeColors();
             hand[i] = t;
         }
+    }
+
+    void MakeMonsters(){
+        if(MonstersMade){return;}
+        int width=board.width;
+        int height=board.height;
+        Monsters=new bool[width,height];
+        Monsters[width / 2, height / 2]=true;
+        Monsters[width / 2 - 1, height / 2]=true;
+        Monsters[width / 2, height / 2 - 1]=true;
+        Monsters[width / 2 - 1, height / 2 - 1]=true;
+
+        for (int i = 4; i <Board.Main.MonstersAmnt; i++)
+        {
+            int x = UnityEngine.Random.Range(1, width - 1);
+            int y = UnityEngine.Random.Range(1, height - 1);
+            if (Monsters[x, y]==false)
+            {
+               Monsters[x,y]=true;
+            }
+            else { i--; }
+        }
+        MonstersMade=true;
+    }
+
+    void SendMonsters(){
+        string msg="MakeMonsters";
+        for(int x=0;x<board.width;x++){
+            for(int y=0;y<board.height;y++){
+                if(Monsters[x,y]){
+                    msg=msg+"|"+x+"|"+y;
+                }
+            }
+        }
+        Broadcast(msg,clients);
+    }
+
+    void AddFirstTile(){
+        TileData tileData = new TileData("Black", "Red", "Blue", "Green");
+        board.AddTileToBoard(tileData, new Vector3(board.width / 2, board.height / 2));
     }
 
     ServerClient byName(string Name){

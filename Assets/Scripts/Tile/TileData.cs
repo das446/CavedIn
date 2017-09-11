@@ -18,6 +18,10 @@ namespace Caged
         {
             Set(up, right, down, left,x,y);
         }
+        public TileData(string up, string right, string down, string left)
+        {
+            Set(Color.FromName(up), Color.FromName(right), Color.FromName(down),Color.FromName(left));
+        }
         public TileData(TileData t){
             Set(t);
         }
