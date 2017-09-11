@@ -111,10 +111,12 @@ namespace Caved
         {
             return CheckSurrounded(t.x, t.y);
         }
-        public void CheckCaptureMonster(int x, int y, bool DoCapture = true)
+        public bool CheckCaptureMonster(int x, int y, bool DoCapture = true)
         {
+            bool captured=false;
             if (CheckSurrounded(x, y))
             {
+                captured=true;
                 if (Monsters[x, y] != null)
                 {
                     Monsters[x, y].GetCaptured();
@@ -128,6 +130,7 @@ namespace Caved
 
             if (CheckSurrounded(x - 1, y))
             {
+                captured=true;
                 if (Monsters[x - 1, y] != null)
                 {
                     Monsters[x - 1, y].GetCaptured();
@@ -140,6 +143,7 @@ namespace Caved
             }
             if (CheckSurrounded(x, y - 1))
             {
+                captured=true;
                 if (Monsters[x, y - 1] != null)
                 {
                     Monsters[x, y - 1].GetCaptured();
@@ -152,6 +156,7 @@ namespace Caved
             }
             if (CheckSurrounded(x - 1, y - 1))
             {
+                captured=true;
                 if (Monsters[x - 1, y - 1] != null)
                 {
                     Monsters[x - 1, y - 1].GetCaptured();
@@ -162,6 +167,7 @@ namespace Caved
                     Player.Current.points++;
                 }
             }
+            return captured;
         }
 
         public bool CanPlayTile(TileData t, int x, int y)

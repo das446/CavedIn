@@ -1429,6 +1429,8 @@ MonoBehaviour:
   Winner: {fileID: 0}
   WinScreen: {fileID: 1838965976}
   MonstersSet: 0
+  PlaceTileParticles: {fileID: 1987582488282684, guid: 666312dd0fc445b4aa69414d0075e541,
+    type: 2}
 --- !u!1 &1468722696
 GameObject:
   m_ObjectHideFlags: 0

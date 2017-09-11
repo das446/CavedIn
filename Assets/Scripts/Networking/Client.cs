@@ -244,6 +244,7 @@ namespace Caved
             GhostTile.main.ghostTile.AdjustDisplay();
             Board.Main.SetNextPlayer();
             Debug.Log("CurrentPlayer="+Player.Current.Name);
+            GhostTile.main.transform.position=Vector3.zero;
         }
 
     }

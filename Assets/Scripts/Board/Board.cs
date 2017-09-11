@@ -9,10 +9,6 @@ namespace Caved
     //TODO Seperate board from game controller
     public class Board : MonoBehaviour
     {
-
-        public const string OnSetTile="Board.SetTile";
-        public const string OnPlaceTile="Board.PlaceTile";
-
         public BoardData Data;
         public BoardDisplay Display;
 
@@ -34,6 +30,8 @@ namespace Caved
         public GameObject WinScreen;
         public bool MonstersSet;
 
+        public GameObject PlaceTileParticles;
+
         void Start()
         {
             Main = this;
@@ -45,8 +43,10 @@ namespace Caved
             players[0].setName(players[0].Name);
             players[1].Name = PlayerPrefs.GetString("Player2Name");
             players[1].setName(players[1].Name);
-            if(PlayerPrefs.GetString("EnemyType")=="Com"){
+            Debug.Log(PlayerPrefs.GetString(MainMenu.EnemyType));
+            if(PlayerPrefs.GetString(MainMenu.EnemyType)=="Com"){
                 players[1].GetComponent<AIPlayer>().enabled=true;
+                players[1].Human=false;
             }
             PlayerIndex = 0;
             Player.Current = players[0];
@@ -71,8 +71,9 @@ namespace Caved
             if (tile != null)
             {
                 Tile T = Display.AddTileToBoard(tile, pos);
-                    if (Data.FilledPositions.Count <= 1) { return T; }
-                Data.CheckCaptureMonster(tile.x, tile.y);
+                if (Data.FilledPositions.Count <= 1) { return T; }
+                bool captured=Data.CheckCaptureMonster(tile.x, tile.y);
+                AddTileParticles(T);
                 if (Player.Current.points >= WinAmnt) { EndGame(); }
                 return T;
             }
@@ -82,6 +83,41 @@ namespace Caved
             }
         }
 
+        void AddTileParticles(Tile T){
+            GameObject particles = Instantiate(PlaceTileParticles, T.transform.position, Quaternion.identity);
+            /*
+            None of this works for now because it just changes them to black and I have no idea why,
+            will try to fix later but it's not that big an issue for now
+
+            ParticleSystem particleSystem=particles.GetComponent<ParticleSystem>();
+            Gradient gradient= new Gradient();
+            GradientColorKey[] gck=new GradientColorKey[4];
+            GradientAlphaKey[] gak;
+            gak = new GradientAlphaKey[4];
+            gck[0].color=T.Data.Up.rgb;
+            gck[0].time = 0;
+            gck[1].color = T.Data.Right.rgb;
+            gck[1].time = 0.3f;
+            gck[2].color = T.Data.Down.rgb;
+            gck[2].time = 0.6f;
+            gck[3].color = T.Data.Left.rgb;
+            gck[3].time = 1;
+
+            gak[0].alpha = 1;
+            gak[0].time = 0;
+            gak[1].alpha = 1;
+            gak[1].time = 0.1f;
+            gak[2].alpha = 1;
+            gak[2].time = 0.2f;
+            gak[3].alpha = 1;
+            gak[3].time = 1;
+
+            gradient.SetKeys(gck,gak);
+            ParticleSystem.ColorOverLifetimeModule col=particleSystem.colorOverLifetime;
+            col.color=gradient;
+            */
+            Destroy(particles, 3);
+        }
 
 
         public int Neighbors(int x, int y)

@@ -62,7 +62,6 @@ namespace Caved
 
         public virtual void Place()
         {
-            Debug.Log("Should be ghost");
             Tile PlacedTile = Board.Main.AddTileToBoard(ghostTile, transform.position / scale);
             if (PlacedTile != null)
             {

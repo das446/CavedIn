@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour {
 	public InputField player1;
 	public InputField player2;
 	public GameObject HelpScreen;
+	public GameObject mainMenu;
 
 	void Start(){
 		if(PlayerPrefs.HasKey("Player1Name")){
@@ -22,7 +23,12 @@ public class MainMenu : MonoBehaviour {
 
 	}
 	public void GoToHelp(){
+		mainMenu.SetActive(false);
 		HelpScreen.SetActive(true);
+	}
+	public void GoBackToMain(){
+		HelpScreen.SetActive(false);
+		mainMenu.SetActive(true);
 	}
 	public void GoToLobby(){
 		SceneManager.LoadScene(2);
