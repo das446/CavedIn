@@ -3,6 +3,10 @@
 /[Oo]bj/
 /[Bb]uild/
 /Assets/AssetStoreTools*
+/Assets/Fork Particle Variety Pack FX/
+/Assets/Gem/
+/Assets/GemExample/
+/Assets/Particle Ribbon by Moonflower Carnivore
 
 # Visual Studio 2015 cache directory
 /.vs/
@@ -32,15 +36,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-© 2017 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
