@@ -1304,6 +1304,14 @@ Prefab:
       propertyPath: TimeText
       value: 
       objectReference: {fileID: 811430833}
+    - target: {fileID: 1788677589511960, guid: f6684308f18dcd1499d60f569695389e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036105768560286, guid: f6684308f18dcd1499d60f569695389e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114041373331300914, guid: f6684308f18dcd1499d60f569695389e, type: 2}
     - {fileID: 114757219025626200, guid: f6684308f18dcd1499d60f569695389e, type: 2}
@@ -1507,7 +1515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1436418315}
         m_MethodName: PlayAgain
         m_Mode: 1
         m_Arguments:

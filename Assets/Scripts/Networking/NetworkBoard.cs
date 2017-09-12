@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Caved
 {
@@ -30,8 +31,17 @@ namespace Caved
             t.Data = tileData;
             t.AdjustDisplay();
 			GameManager.Instance.InitializeGame();
-			//Player.Current.Tiles[0].GetComponent<InHandTile>().Select();
 		}
+
+        public override void PlayAgain()
+        {
+            Destroy(GameObject.FindObjectOfType<Server>());
+            Client[] clients=GameObject.FindObjectsOfType<Client>();
+            for(int i=0;i<clients.Length;i++){
+                Destroy(clients[i]);
+            }
+            SceneManager.LoadScene(0);
+        }
 
         public void CreateMonstersFromServer(string[] data)
         {

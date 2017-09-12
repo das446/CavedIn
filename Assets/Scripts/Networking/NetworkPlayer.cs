@@ -15,7 +15,6 @@ namespace Caved
 
         public string CurrentPlayerName;
 
-        // Use this for initialization
         void Start()
         {
             Tiles = new Tile[HandSize];

@@ -28,8 +28,6 @@ namespace Caved
         public static Player Current;
         protected float mid = 20f;
 
-       
-        // Use this for initialization
         void Start()
         {
             Tiles = new Tile[HandSize];
@@ -44,7 +42,6 @@ namespace Caved
             GetComponent<Text>().text = text;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Current == null)
@@ -59,7 +56,7 @@ namespace Caved
 
                 if (TimeLeft <= 0)
                 {
-					//Do a random move, probably taking from AI
+					//Do a random valid move
                 }
             }
         }

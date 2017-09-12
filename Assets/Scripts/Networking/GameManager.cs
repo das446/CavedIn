@@ -61,7 +61,7 @@ namespace Caved
                 Clients.Add(c);
                 c.clientName = ClientName;
                 if (c.clientName == "") { c.clientName = "Host"; }
-                c.ConnectToServer("127.0.0.1", portNumber);
+                c.ConnectToServer(LocalIPAddress().ToString(), portNumber);
 				IP.text="Waiting for another player...\nYoure IP is "+	LocalIPAddress().ToString();
             }
             catch (Exception e)

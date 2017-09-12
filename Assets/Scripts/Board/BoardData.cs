@@ -56,7 +56,6 @@ namespace Caved
                 Debug.Log("x="+x+", y="+y);
             }
             FilledPositions.Add(pos);
-            //CheckSurroundSpace(x, y);
             return tile;
         }
 

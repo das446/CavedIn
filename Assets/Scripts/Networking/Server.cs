@@ -83,7 +83,7 @@ public class Server : MonoBehaviour
 
         for (int i = 0; i < disconnectList.Count - 1; i++)
         {
-            //tell player someone disconnected
+            Broadcast("Disconnect|"+disconnectList[i],clients);
             clients.Remove(disconnectList[i]);
             disconnectList.RemoveAt(i);
         }
@@ -136,7 +136,6 @@ public class Server : MonoBehaviour
         {
             try
             {
-                //Debug.Log("Send data " + data + " to " + sc.ClientName);
                 StreamWriter writer = new StreamWriter(sc.tcp.GetStream());
                 writer.WriteLine(data);
                 writer.Flush();
@@ -158,9 +157,7 @@ public class Server : MonoBehaviour
     {
 
         string[] aData = data.Split('|');
-        //if(String.IsNullOrEmpty(aData[1])){return;}
 
-        //Debug.Log("Server Recieve:"+data);
         switch (aData[0])
         {
             case "CWHO":

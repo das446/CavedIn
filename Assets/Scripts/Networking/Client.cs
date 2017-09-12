@@ -116,6 +116,10 @@ namespace Caved
                     PlaceTileFromServer(aData);
                     break;
 
+                case "Disconnect":
+                    UserDisconnected(aData[1]);
+                    break;
+
                 default:
                     break;
             }
@@ -193,6 +197,14 @@ namespace Caved
         void OnDisable()
         {
             CloseSocket();
+        }
+        void OnDestroy()
+        {
+            CloseSocket();
+        }
+
+        void UserDisconnected(string Name){
+            Debug.Log(Name+" Disconnected");
         }
         void SetHandTiles(string[] aData)
         {

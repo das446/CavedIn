@@ -32,7 +32,6 @@ public class Monster : MonoBehaviour {
 
 	void OnMouseExit()
 	{
-		//Debug.Log("MOuseExit");
 		Picture.enabled=false;
 		Description.text="";
 		

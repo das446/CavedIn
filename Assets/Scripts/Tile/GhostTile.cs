@@ -14,7 +14,6 @@ namespace Caved
         public bool TestingFollow=false;
         public int i;
 
-        // Use this for initialization
         void Start()
         {
             main = this;
@@ -26,7 +25,6 @@ namespace Caved
             StartCoroutine(SendPositionToServer());
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (ShouldRotate())
@@ -78,7 +76,7 @@ namespace Caved
 
         public bool ShouldRotate()
         {
-            return (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.X)) && !ghostTile.Display.rotating;
+            return (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.X)) && !ghostTile.Display.rotating&&Player.Current.Human;
         }
         Vector3 NearestIntersection(Vector3 v)
         {

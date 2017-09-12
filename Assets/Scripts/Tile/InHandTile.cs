@@ -7,7 +7,6 @@ namespace Caved
     public class InHandTile : MonoBehaviour
     {
 
-        // Use this for initialization
         public Vector2 Default;
         public static Tile selectedTile;
         public Tile tile;
@@ -20,7 +19,6 @@ namespace Caved
             Default = Camera.main.WorldToScreenPoint(transform.position);
             tile = GetComponent<Tile>();
             if(selectedTile==null){
-                Debug.Log("Assigned selectedTile");
                 selectedTile=tile;
             }
         }

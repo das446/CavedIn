@@ -20,17 +20,6 @@ namespace Caved
 				Debug.Log(msg);
                 np.Send(msg);
 
-				//PlaceTile|David|0|x|y|Blue|Red|Green|Blue
-
-                //PlacedTile.Set(ghostTile.Data);
-                //PlacedTile.AdjustDisplay();
-               
-                //InHandTile.selectedTile.Data.RandomizeColors();
-                //InHandTile.selectedTile.Display.AdjustDisplay();
-                //ghostTile.Set(InHandTile.selectedTile);
-                //ghostTile.AdjustDisplay();
-                //Board.Main.SetNextPlayer();
-
             }
 
         }

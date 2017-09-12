@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Caved{
 	[System.Serializable]
@@ -16,6 +17,7 @@ public class Color {
 
 	public string name;
 	public string GemName;
+	public static int numRandom;
 
 	public UnityEngine.Color rgb;
 
@@ -25,10 +27,9 @@ public class Color {
 		rgb=RGB;
 	}
 
-	// Use this for initialization
-
 	public static Color Random(){
-		Color[] colors=new Color[]{Red,Blue,Green,Black,White,Yellow};
+		Color[] colors=new Color[]{Red,Blue,Green,Black,White,Yellow,Orange};
+		colors=colors.Take(numRandom).ToArray();
 		int r = UnityEngine.Random.Range(0, colors.Length);
 		return colors[r];
 	}
@@ -39,7 +40,6 @@ public class Color {
 
 	public static Color FromName(string Name){
 
-		//Color[] colors = new Color[] { Red, Blue, Green, Black, White, Yellow,Orange };
 		Dictionary<string, Color> dictionary=new Dictionary<string,Color>{
 			{"Red",Red},
 			{"Blue",Blue},

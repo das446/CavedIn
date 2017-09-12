@@ -31,6 +31,7 @@ namespace Caved
         public bool MonstersSet;
 
         public GameObject PlaceTileParticles;
+        public GameSettings settings;
 
         void Start()
         {
@@ -221,7 +222,7 @@ namespace Caved
         }
 
 
-        public void PlayAgain()
+        public virtual void PlayAgain()
         {
             SceneManager.LoadScene(0);
         }
