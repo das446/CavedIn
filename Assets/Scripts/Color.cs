@@ -17,7 +17,7 @@ public class Color {
 
 	public string name;
 	public string GemName;
-	public static int numRandom;
+	public static int numRandom=5;
 
 	public UnityEngine.Color rgb;
 

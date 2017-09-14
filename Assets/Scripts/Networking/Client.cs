@@ -41,6 +41,7 @@ namespace Caved
                     }
                 }
             }
+            
         }
 
         public bool ConnectToServer(string host, int port)
@@ -92,10 +93,13 @@ namespace Caved
                     ((NetworkBoard)(Board.Main)).CreateMonstersFromServer(aData);
                     break;
 
+                case "Test":
+                    GameManager.debug("Recieved Response From Server");
+                    break;
+
                 case "Current":
                     player.setCurrentPlayer(aData[1]);
                     player.CurrentPlayerName = aData[1];
-                    
                     break;
 
                 case "Selected":

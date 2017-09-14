@@ -21,6 +21,13 @@ namespace Caved
             setName(Name);
             CreateStartHand();
         }
+        protected override void Update(){
+            base.Update();
+            if(Input.GetKeyDown(KeyCode.T)){
+                Send("Test|"+client.clientName);
+                GameManager.debug("Send to Server");
+            }
+        }
 
        public void setCurrentPlayer(string Name)
         {

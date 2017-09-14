@@ -84,6 +84,7 @@ public class Server : MonoBehaviour
         for (int i = 0; i < disconnectList.Count - 1; i++)
         {
             Broadcast("Disconnect|"+disconnectList[i],clients);
+            GameManager.debug(disconnectList[i].ClientName+" Disconnected");
             clients.Remove(disconnectList[i]);
             disconnectList.RemoveAt(i);
         }
@@ -177,6 +178,9 @@ public class Server : MonoBehaviour
             case "MakeMonsters":
                 MakeMonsters();
                 SendMonsters();
+                break;
+            case "Test":
+                Broadcast("Test|"+aData[1],byName(aData[1]));
                 break;
             case "Select":
                 Broadcast("Selected|"+aData[1]+"|"+aData[2],ClientsExcept(aData[1]));

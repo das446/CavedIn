@@ -42,7 +42,7 @@ namespace Caved
             GetComponent<Text>().text = text;
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if (Current == null)
             {
