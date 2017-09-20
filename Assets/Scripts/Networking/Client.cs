@@ -22,6 +22,8 @@ namespace Caved
         public Caved.NetworkPlayer player;
         public bool Host;
         public Client Opponent;
+        string host;
+        int port;
 
         void Start()
         {
@@ -41,6 +43,11 @@ namespace Caved
                     }
                 }
             }
+            if (!socket.Connected)
+            {
+                ConnectToServer(host,port);
+            }
+            
             
         }
 
@@ -50,12 +57,15 @@ namespace Caved
 
             try
             {
+                socket=null;
                 socket = new TcpClient(host, port);
                 stream = socket.GetStream();
                 writer = new StreamWriter(stream);
                 reader = new StreamReader(stream);
 
                 socketReady = true;
+                this.host=host;
+                this.port=port;
 
             }
             catch (Exception e)
@@ -85,7 +95,6 @@ namespace Caved
                     break;
 
                 case "SetHandTiles":
-                    Debug.Log(clientName + " recieved " + data);
                     SetHandTiles(aData);
                     break;
 

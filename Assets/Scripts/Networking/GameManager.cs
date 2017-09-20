@@ -43,10 +43,22 @@ namespace Caved
             ClientName = PlayerPrefs.GetString("Player1Name");
         }
 
+        void Update(){
+            Event e = Event.current;
+            if(e==null){return;}
+            if (!e.isKey) {return;}
+            if(e.keyCode==KeyCode.Return&&GameObject.Find("HostInput").activeSelf){
+                ConnectButton();
+            }
+        }
+
         public void ConnectButton()
         {
             mainMenu.SetActive(false);
             connectMenu.SetActive(true);
+            string lastHost=PlayerPrefs.GetString("LastIP","127.0.0.1");
+            GameObject.Find("HostInput").GetComponent<InputField>().text=lastHost;
+
         }
         public void HostButton()
         {
@@ -83,6 +95,7 @@ namespace Caved
 
             try
             {
+                PlayerPrefs.SetString("LastIP",hostAdress);
                 Client c = Instantiate(clientPrefab).GetComponent<Client>();
                 c.clientName = ClientName;
                 Clients.Add(c);

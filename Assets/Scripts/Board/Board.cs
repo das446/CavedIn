@@ -65,6 +65,9 @@ namespace Caved
             if(Input.GetKeyDown(KeyCode.Escape)){
                 Application.Quit();
             }
+            /*if(Input.GetKeyDown(KeyCode.P)){
+                GameSaver.SaveGame(Data,players[0],players[1]);
+            }*/
         }
         public Tile AddTileToBoard(TileData t, Vector3 pos)
         {
